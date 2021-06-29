@@ -1,5 +1,8 @@
 on: [push, repository_dispatch]
 
+env:
+  PACKAGE_NAME: rubygems-publish-version-test
+
 jobs:
   bundle-install:
     runs-on: ubuntu-latest
@@ -16,14 +19,14 @@ jobs:
         run: |
           cat > Gemfile << EOM
           source "https://rubygems.pkg.github.com/${{ github.repository_owner }}" do
-            gem "rubygems-publish"
+            gem "${{ env.PACKAGE_NAME }}"
           end
           EOM
 
       - name: Add main.rb
         run: |
           cat > main.rb << EOM
-          require 'rubygems-publish'
+          require '${{ env.PACKAGE_NAME }}'
           RubyGemsPublish.hello
           EOM
 
@@ -61,12 +64,12 @@ jobs:
           EOM
 
       - name: Install Gem
-        run: gem install rubygems-publish
+        run: gem install ${{ env.PACKAGE_NAME }}
 
       - name: Add main.rb
         run: |
           cat > main.rb << EOM
-          require 'rubygems-publish'
+          require '${{ env.PACKAGE_NAME }}'
           RubyGemsPublish.hello
           EOM
 
