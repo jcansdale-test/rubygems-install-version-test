@@ -1,4 +1,4 @@
-on: [push, repository_dispatch]
+on: [push, workflow_dispatch]
 
 env:
   PACKAGE_NAME: rubygems-publish-version-test
